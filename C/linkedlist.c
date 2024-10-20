@@ -18,15 +18,22 @@ struct node* createNode(int new_data) {
 
 void insertAtBeginning(node **head, int new_data) {
     struct node *newNode = createNode(new_data);
+    newNode->next = *head;
+    *head = newNode;
+}
 
-    if(head == NULL) {
-        *head = newNode;
-    }
-    else {
-        newNode->next = *head;
-        *head = newNode;
-    }
+void insertAtEnd(node **head, int new_data) {
+    struct node *newNode = createNode(new_data);
 
+    if(*head == NULL) {
+        *head = newNode;
+    }return;
+
+    struct node *tail = *head;
+    while(tail->next != NULL){
+        tail = tail->next;
+    }
+    tail->next = newNode;
 }
 
 void printList(struct node *head) {
@@ -45,7 +52,7 @@ int main() {
     insertAtBeginning(&head, 15);
     insertAtBeginning(&head, 10);
     insertAtBeginning(&head, 5);
-    insertAtBeginning(&head, 1);
+    insertAtEnd(&head, 25);
     printList(head);
 
     return 0;
