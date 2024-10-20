@@ -25,14 +25,26 @@ void insertAtBeginning(node **head, int new_data) {
 void insertAtEnd(node **head, int new_data) {
     struct node *newNode = createNode(new_data);
 
-    if(*head == NULL) {
+    if (*head == NULL) {
         *head = newNode;
-    }return;
+    } else {
+        struct node *tail = *head;
+        while (tail->next != NULL) {
+            tail = tail->next;
+        }
+        tail->next = newNode;
+    }
+}
+
+void insertBeforeTail(node **head, int new_data) {
+    struct node *newNode = createNode(new_data);
 
     struct node *tail = *head;
-    while(tail->next != NULL){
-        tail = tail->next;
+    while(tail->next->next != NULL) {
+        tail = tail ->next;
     }
+
+    newNode->next = tail->next;
     tail->next = newNode;
 }
 
@@ -50,9 +62,13 @@ int main() {
     struct node *head = NULL;
 
     insertAtBeginning(&head, 15);
+    insertAtEnd(&head, 18);
     insertAtBeginning(&head, 10);
-    insertAtBeginning(&head, 5);
-    insertAtEnd(&head, 25);
+    insertBeforeTail(&head, 25);
+    insertAtEnd(&head, 28);
+    insertAtBeginning(&head, 3);
+    insertBeforeTail(&head, 25);
+    
     printList(head);
 
     return 0;
